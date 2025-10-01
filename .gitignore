@@ -1,0 +1,63 @@
+# APT Rehber - Git Ignore
+
+# Geçici dosyalar
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Backup dosyaları
+*.bak
+*.backup
+*.old
+
+# Log dosyaları
+*.log
+logs/
+
+# İlerleme ve kullanıcı verileri
+.apt_rehber_progress
+.apt_rehber_history
+user_data/
+
+# Tmux socket dosyaları
+.tmux-*
+tmux-*
+
+# Test dosyaları
+test/
+tmp/
+temp/
+
+# OS spesifik dosyalar
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor konfigürasyonları
+.vscode/
+.idea/
+*.sublime-*
+.atom/
+
+# Bash geçici dosyaları
+.bash_history
+.bash_sessions/
+
+# Paket dosyaları (test için indirilmiş .deb dosyaları)
+*.deb
+packages/
+
+# Cache dizinleri
+.cache/
+__pycache__/
+
+# Session dosyaları
+session_*
+.session
+
+# Personal notes
+notes.txt
+TODO.txt
+PERSONAL.md
