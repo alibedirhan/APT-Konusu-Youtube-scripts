@@ -1051,16 +1051,25 @@ echo
 WELCOME_EOF
     chmod +x "$SCRIPT_DIR/welcome.sh"
     
-    tmux new-session -d -s "$SESSION_NAME"
-    tmux set -g mouse on
-    tmux rename-window -t "$SESSION_NAME" "APT-Rehber"
-    tmux split-window -h -t "$SESSION_NAME"
-    tmux resize-pane -t "$SESSION_NAME:0.0" -x 65%
-    
-    tmux send-keys -t "$SESSION_NAME:0.1" "cd '$SCRIPT_DIR' && ./welcome.sh" C-m
-    tmux send-keys -t "$SESSION_NAME:0.0" "cd '$SCRIPT_DIR' && ./$(basename "$0") --menu-only" C-m
-    
-    tmux attach-session -t "$SESSION_NAME"
+    tmux new-session -d -s "$SESSION_NAME" -n "APT-Rehber"
+tmux set -g mouse on
+
+# Bölmeyi yatay ayır (sol=menü, sağ=test)
+tmux split-window -h -t "$SESSION_NAME:APT-Rehber"
+
+# Yerleşim: geniş sol panel (tmux yüzde alamaz, bu layout benzer etki verir)
+tmux select-layout -t "$SESSION_NAME:APT-Rehber" main-vertical
+
+# Pane kimliklerini al (base-index/pane-base-index ayarlarından bağımsız)
+readarray -t PANES < <(tmux list-panes -t "$SESSION_NAME:APT-Rehber" -F '#{pane_id}')
+LEFT="${PANES[0]}"
+RIGHT="${PANES[1]}"
+
+# Sağ panele test terminalini, sol panele menüyü gönder
+tmux send-keys -t "$RIGHT" "cd '$SCRIPT_DIR' && ./welcome.sh" C-m
+tmux send-keys -t "$LEFT"  "cd '$SCRIPT_DIR' && ./$(basename "$0") --menu-only" C-m
+
+tmux attach-session -t "$SESSION_NAME"
 }
 
 # Ana menü tmux içinde göster
