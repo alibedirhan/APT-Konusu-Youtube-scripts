@@ -1,4 +1,4 @@
-# APT Rehber - Git Ignore
+# APT Rehber - .gitignore
 
 # Geçici dosyalar
 *.tmp
@@ -10,54 +10,38 @@
 # Backup dosyaları
 *.bak
 *.backup
-*.old
+*_backup
+*_old
 
 # Log dosyaları
 *.log
 logs/
 
-# İlerleme ve kullanıcı verileri
-.apt_rehber_progress
-.apt_rehber_history
-user_data/
-
-# Tmux socket dosyaları
-.tmux-*
-tmux-*
-
-# Test dosyaları
-test/
-tmp/
-temp/
-
-# OS spesifik dosyalar
+# OS specific
 .DS_Store
 Thumbs.db
-Desktop.ini
+desktop.ini
 
-# Editor konfigürasyonları
+# Editor specific
 .vscode/
 .idea/
-*.sublime-*
-.atom/
+*.sublime-project
+*.sublime-workspace
 
-# Bash geçici dosyaları
-.bash_history
-.bash_sessions/
+# Test dosyaları
+test_output/
+*.test
 
-# Paket dosyaları (test için indirilmiş .deb dosyaları)
-*.deb
-packages/
+# Tmux
+.tmux/
+tmux-client-*.log
 
-# Cache dizinleri
-.cache/
-__pycache__/
+# User data (eğer eklenirse)
+user_data/
+config/*.local
 
-# Session dosyaları
-session_*
-.session
-
-# Personal notes
-notes.txt
-TODO.txt
-PERSONAL.md
+# Build artifacts (gelecek için)
+dist/
+build/
+*.tar.gz
+*.zip

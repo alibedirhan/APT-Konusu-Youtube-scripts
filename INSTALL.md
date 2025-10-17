@@ -1,309 +1,413 @@
-# Kurulum Rehberi
+# 📦 APT Rehber - Detaylı Kurulum Kılavuzu
 
-APT Rehber'i sisteminize kurma adımları.
+Bu dokümanda APT Rehber scriptinin farklı sistemlerde nasıl kurulacağı ve çalıştırılacağı detaylı olarak açıklanmıştır.
 
-## Sistem Gereksinimleri
+---
+
+## 📋 İçindekiler
+
+- [Sistem Gereksinimleri](#sistem-gereksinimleri)
+- [Otomatik Kurulum](#otomatik-kurulum)
+- [Manuel Kurulum](#manuel-kurulum)
+- [İleri Düzey Kurulum](#ileri-düzey-kurulum)
+- [Sorun Giderme](#sorun-giderme)
+
+---
+
+## 🖥️ Sistem Gereksinimleri
 
 ### Desteklenen İşletim Sistemleri
 
-- Ubuntu 20.04 LTS veya üstü
-- Debian 10 (Buster) veya üstü
-- Linux Mint 20 veya üstü
-- Pop!_OS 20.04 veya üstü
-- Elementary OS 6 veya üstü
+✅ **Tam Destek:**
+- Ubuntu 20.04+
+- Debian 11+
+- Linux Mint 20+
+- Pop!_OS 20.04+
 
-### Minimum Gereksinimler
+⚠️ **Kısmi Destek:**
+- Debian 10 (tmux 2.8+ gerekli)
+- Ubuntu 18.04 (eski tmux versiyonu)
 
-- **İşlemci**: 1 GHz veya daha hızlı
-- **RAM**: 512 MB (1 GB önerilir)
-- **Disk Alanı**: 50 MB
-- **Bash Versiyonu**: 5.0 veya üstü
-- **İnternet**: Bağımlılık kurulumu için gerekli
+❌ **Desteklenmiyor:**
+- CentOS/RHEL (yum/dnf kullanır)
+- Arch Linux (pacman kullanır)
+- Fedora (dnf kullanır)
 
-### Gerekli Paketler
+### Gerekli Bağımlılıklar
 
-- `bash` (5.0+)
-- `tmux` (2.6+)
-- `less` (veya `more`)
-- `sudo` yetkisi
+| Paket | Minimum Versiyon | Amaç | Otomatik Kurulum |
+|-------|------------------|------|------------------|
+| `bash` | 4.0+ | Script interpreter | ✅ Sistemde var |
+| `tmux` | 2.6+ | Terminal multiplexer | ✅ Evet |
+| `less` | 530+ | Sayfalayıcı | ✅ Evet |
+| `apt` | - | Paket yöneticisi | ✅ Sistemde var |
+| `git` | 2.0+ | Repository klonlama | ⚠️ Manuel |
 
-## Kurulum Yöntemleri
+### Donanım Gereksinimleri
+
+| Kaynak | Minimum | Önerilen |
+|--------|---------|----------|
+| RAM | 512 MB | 1 GB+ |
+| Disk | 50 MB | 100 MB+ |
+| CPU | 1 Core | 2 Core+ |
+| Ekran | 80x24 | 120x40+ |
+
+---
+
+## 🚀 Otomatik Kurulum
 
 ### Yöntem 1: Git ile Klonlama (Önerilen)
 
 ```bash
-# 1. Repoyu klonla
-git clone https://github.com/alibedirhan/Youtube-scripts.git
+# 1. Repository'yi klonlayın
+git clone https://github.com/alibedirhan/Youtube-scripts
+cd Youtube-scripts/APT\ YOUTUBE/
 
-# 2. Dizine gir
-cd Youtube-scripts
-
-# 3. Çalıştırma yetkisi ver
+# 2. Scripti çalıştırılabilir yapın
 chmod +x apt_rehber.sh
 
-# 4. Çalıştır
+# 3. Çalıştırın
 ./apt_rehber.sh
 ```
 
-### Yöntem 2: Wget ile İndirme
+**İlk çalıştırmada:**
+```
+╔══════════════════════════════════════════════════════════════╗
+║                     APT PAKET YÖNETİCİSİ                     ║
+╚══════════════════════════════════════════════════════════════╝
+
+Sistem kontrolleri yapılıyor...
+✅ APT paket yöneticisi bulundu
+✅ Root olmayan kullanıcı
+⚠️  Eksik bağımlılıklar: tmux less
+
+Gerekli paketler otomatik olarak kuruluyor...
+[sudo] password for ali: 
+
+✅ Tüm bağımlılıklar başarıyla kuruldu!
+Script yeniden başlatılıyor...
+```
+
+### Yöntem 2: Tek Komut Kurulum
 
 ```bash
-# 1. Script'i indir
-wget https://raw.githubusercontent.com/alibedirhan/Youtube-scripts/main/apt_rehber.sh
-
-# 2. Çalıştırma yetkisi ver
-chmod +x apt_rehber.sh
-
-# 3. Çalıştır
+git clone https://github.com/alibedirhan/Youtube-scripts && \
+cd Youtube-scripts/APT\ YOUTUBE && \
+chmod +x apt_rehber.sh && \
 ./apt_rehber.sh
 ```
 
-### Yöntem 3: Curl ile İndirme
+---
+
+## 🔧 Manuel Kurulum
+
+Otomatik kurulum çalışmazsa veya daha fazla kontrol istiyorsanız:
+
+### Adım 1: Git Kurulumu
 
 ```bash
-# 1. Script'i indir ve çalıştırma yetkisi ver
-curl -fsSL https://raw.githubusercontent.com/alibedirhan/Youtube-scripts/main/apt_rehber.sh -o apt_rehber.sh && chmod +x apt_rehber.sh
+# Git yüklü mü kontrol edin
+git --version
 
-# 2. Çalıştır
-./apt_rehber.sh
-```
-
-### Yöntem 4: Manuel Kurulum
-
-1. [Releases](https://github.com/alibedirhan/Youtube-scripts/releases) sayfasından son sürümü indirin
-2. ZIP dosyasını açın
-3. Terminal'de dizine gidin
-4. Çalıştırma yetkisi verin: `chmod +x apt_rehber.sh`
-5. Çalıştırın: `./apt_rehber.sh`
-
-## Otomatik Bağımlılık Kurulumu
-
-Script ilk çalıştırıldığında eksik bağımlılıkları otomatik olarak tespit eder ve kurar:
-
-```bash
-./apt_rehber.sh
-# Çıktı:
-# Eksik bağımlılıklar tespit edildi: tmux less
-# • tmux: Çift panel deneyimi için
-# • less: Modül içeriklerinde sorunsuz navigasyon için
-# Gerekli paketler otomatik olarak kuruluyor...
-```
-
-## Manuel Bağımlılık Kurulumu
-
-Bağımlılıkları önceden kurmak isterseniz:
-
-```bash
-# Ubuntu/Debian
+# Yoksa kurun
 sudo apt update
-sudo apt install tmux less git
-
-# Diğer dağıtımlar için APT mevcut değil,
-# bu nedenle bu script Ubuntu/Debian dışında çalışmaz
+sudo apt install git
 ```
 
-## Kurulum Doğrulama
-
-Kurulumun başarılı olduğunu kontrol edin:
+### Adım 2: Repository Klonlama
 
 ```bash
-# Script çalışıyor mu?
+# İstediğiniz dizinde
+cd ~/Desktop  # veya istediğiniz yer
+
+# Klonlama
+git clone https://github.com/alibedirhan/Youtube-scripts
+
+# Dizine girme
+cd Youtube-scripts/APT\ YOUTUBE/
+```
+
+### Adım 3: Bağımlılıkları Kontrol
+
+```bash
+# Tmux kontrolü
+if command -v tmux &> /dev/null; then
+    echo "✅ tmux kurulu: $(tmux -V)"
+else
+    echo "❌ tmux yüklü değil"
+    sudo apt install tmux
+fi
+
+# Less kontrolü
+if command -v less &> /dev/null; then
+    echo "✅ less kurulu"
+else
+    echo "❌ less yüklü değil"
+    sudo apt install less
+fi
+```
+
+### Adım 4: Dosya İzinleri
+
+```bash
+# Ana script
+chmod +x apt_rehber.sh
+
+# Welcome script
+chmod +x welcome.sh
+
+# Tüm modüller
+chmod +x modules/*.sh
+
+# Kontrol
+ls -lh apt_rehber.sh
+# -rwxr-xr-x ... apt_rehber.sh ← x olmalı
+```
+
+### Adım 5: Modül Kontrolü
+
+```bash
+# Modüllerin varlığını kontrol et
+ls -1 modules/
+
+# Beklenen çıktı:
+# module_01.sh
+# module_02.sh
+# module_03.sh
+# module_04.sh
+# module_05.sh
+# module_quiz.sh
+```
+
+### Adım 6: Çalıştırma
+
+```bash
 ./apt_rehber.sh
 
-# Bağımlılıklar yüklü mü?
-which tmux
-which less
-which bash
-
-# Bash versiyonu uygun mu?
-bash --version
+# veya tam path ile
+bash apt_rehber.sh
 ```
 
-## Kurulum Sorunları ve Çözümleri
+---
 
-### Sorun 1: "Permission denied" Hatası
+## 🔬 İleri Düzey Kurulum
+
+### Sistem Geneli Kurulum
+
+Script'i sistem genelinde kullanılabilir yapmak için:
 
 ```bash
-# Hata
-bash: ./apt_rehber.sh: Permission denied
+# Script'i sistem dizinine kopyala
+sudo cp apt_rehber.sh /usr/local/bin/apt-rehber
 
-# Çözüm
+# Modülleri kopyala
+sudo mkdir -p /usr/local/share/apt-rehber
+sudo cp -r modules /usr/local/share/apt-rehber/
+sudo cp welcome.sh /usr/local/share/apt-rehber/
+
+# Script'i düzenle (SCRIPT_DIR yolunu güncelle)
+sudo nano /usr/local/bin/apt-rehber
+
+# Kullanım
+apt-rehber  # Her yerden çalışır!
+```
+
+### Alias Tanımlama
+
+```bash
+# Bash için
+echo 'alias apt-rehber="~/Youtube-scripts/APT\ YOUTUBE/apt_rehber.sh"' >> ~/.bashrc
+source ~/.bashrc
+
+# Zsh için
+echo 'alias apt-rehber="~/Youtube-scripts/APT\ YOUTUBE/apt_rehber.sh"' >> ~/.zshrc
+source ~/.zshrc
+
+# Kullanım
+apt-rehber  # Her yerden çalışır!
+```
+
+### Desktop Entry Oluşturma
+
+GUI'den başlatmak için:
+
+```bash
+cat > ~/.local/share/applications/apt-rehber.desktop << 'EOF'
+[Desktop Entry]
+Type=Application
+Name=APT Rehber
+Comment=İnteraktif APT Öğrenme Platformu
+Exec=gnome-terminal -- bash -c "cd ~/Youtube-scripts/APT\ YOUTUBE && ./apt_rehber.sh"
+Icon=utilities-terminal
+Terminal=true
+Categories=Education;System;
+EOF
+
+# Uygulama menüsünden "APT Rehber" arayabilirsiniz
+```
+
+---
+
+## 🐛 Sorun Giderme
+
+### Sorun 1: "command not found: git"
+
+**Çözüm:**
+```bash
+sudo apt update
+sudo apt install git
+```
+
+### Sorun 2: "Permission denied" Hatası
+
+**Çözüm:**
+```bash
 chmod +x apt_rehber.sh
+chmod +x welcome.sh
+chmod +x modules/*.sh
 ```
 
-### Sorun 2: "tmux: command not found"
+### Sorun 3: "modules/ klasörü bulunamadı"
 
+**Neden:** Repository'nin sadece bir dosyası indirilmiş.
+
+**Çözüm:**
 ```bash
-# Çözüm: tmux'u manuel kur
+# Tam repository'yi klonlayın
+rm -rf Youtube-scripts  # Eski dosyaları sil
+git clone https://github.com/alibedirhan/Youtube-scripts
+cd Youtube-scripts/APT\ YOUTUBE/
+ls modules/  # Kontrol et
+```
+
+### Sorun 4: "tmux: command not found"
+
+**Çözüm:**
+```bash
 sudo apt update
 sudo apt install tmux
 ```
 
-### Sorun 3: "Bu script APT paket yöneticisi olan sistemlerde çalışır"
+### Sorun 5: Türkçe Karakterler Bozuk
 
-Bu hata APT olmayan sistemlerde (Fedora, Arch, vb.) çıkar. Maalesef script sadece Debian/Ubuntu tabanlı sistemlerde çalışır.
-
-### Sorun 4: "HATA: Bu scripti root kullanıcısı olarak çalıştırmayın!"
-
+**Çözüm:**
 ```bash
-# Yanlış
-sudo ./apt_rehber.sh
+# Locale kontrol
+locale
 
-# Doğru
+# Türkçe locale yükle
+sudo apt install language-pack-tr
+export LANG=tr_TR.UTF-8
+export LC_ALL=tr_TR.UTF-8
+```
+
+### Sorun 6: "can't find pane" Hatası
+
+**Çözüm:**
+```bash
+# Eski tmux session'larını temizle
+tmux kill-server
+
+# Script'i tekrar çalıştır
 ./apt_rehber.sh
-# Script gerektiğinde sudo isteyecektir
 ```
 
-### Sorun 5: Git Kurulu Değil
+### Sorun 7: Tmux Mouse Çalışmıyor
 
+**Çözüm:**
 ```bash
-# Git'i kur
-sudo apt install git
+# Tmux versiyonunu kontrol et
+tmux -V
 
-# Sonra repoyu klonla
-git clone https://github.com/alibedirhan/Youtube-scripts.git
+# 2.6'dan eskiyse güncelle
+sudo apt update
+sudo apt install tmux
+
+# ~/.tmux.conf'a ekle (isteğe bağlı)
+echo "set -g mouse on" >> ~/.tmux.conf
 ```
 
-### Sorun 6: İnternet Bağlantısı Yok
+### Sorun 8: Script Root Olarak Çalışmıyor
 
-Bağımlılık kurulumu için internet gereklidir. Offline kurulum için:
+**Neden:** Güvenlik önlemi. Root olarak çalıştırmak tehlikelidir.
 
-1. İnterneti olan başka bir makinede tmux ve less paketlerini indirin:
+**Çözüm:**
 ```bash
-apt download tmux less
+# Normal kullanıcı olarak çalıştırın
+exit  # root'tan çık
+./apt_rehber.sh  # Normal kullanıcı ile
 ```
-
-2. .deb dosyalarını USB ile taşıyın
-
-3. Offline makinede kurun:
-```bash
-sudo dpkg -i tmux*.deb less*.deb
-```
-
-## Sistem PATH'e Ekleme (Opsiyonel)
-
-Script'i her yerden çalıştırabilmek için:
-
-```bash
-# 1. Script'i /usr/local/bin'e kopyala
-sudo cp apt_rehber.sh /usr/local/bin/apt-rehber
-
-# 2. Artık her yerden çalıştırabilirsiniz
-apt-rehber
-```
-
-## Alias Oluşturma (Opsiyonel)
-
-Kısa bir komutla çalıştırmak için:
-
-```bash
-# .bashrc veya .zshrc'ye ekle
-echo "alias apt-rehber='cd ~/Youtube-scripts && ./apt_rehber.sh'" >> ~/.bashrc
-
-# Değişiklikleri yükle
-source ~/.bashrc
-
-# Artık sadece şunu yazmanız yeterli
-apt-rehber
-```
-
-## Güncelleme
-
-### Git ile Güncelleme
-
-```bash
-cd Youtube-scripts
-git pull origin main
-```
-
-### Manuel Güncelleme
-
-1. Yeni sürümü [Releases](https://github.com/alibedirhan/Youtube-scripts/releases) sayfasından indirin
-2. Eski dosyaların yerine yeni dosyaları koyun
-
-## Kaldırma
-
-Script'i kaldırmak için:
-
-```bash
-# 1. Dizini sil
-rm -rf Youtube-scripts
-
-# 2. İlerleme dosyasını sil (opsiyonel)
-rm -f ~/.apt_rehber_progress
-
-# 3. PATH'e eklediyseniz
-sudo rm /usr/local/bin/apt-rehber
-
-# 4. Alias eklediyseniz
-# .bashrc veya .zshrc'den ilgili satırı silin
-```
-
-## İlk Çalıştırma
-
-İlk kez çalıştırdığınızda:
-
-1. Script bağımlılıkları kontrol eder
-2. Eksik olanları kurmak için onay ister
-3. Modül dosyalarını oluşturur
-4. Tmux session başlatır
-5. Ana menüyü gösterir
-
-**İpucu**: İlk çalıştırmada Modül 1'den başlayın.
-
-## Gelişmiş Kurulum
-
-### Docker ile Çalıştırma (Gelecek)
-
-```bash
-# Henüz mevcut değil, gelecek sürümlerde eklenecek
-docker run -it alibedirhan/apt-rehber
-```
-
-### Sanal Makine Test Ortamı
-
-Test için temiz bir Ubuntu VM kurabilirsiniz:
-
-```bash
-# VirtualBox veya VMware'de Ubuntu 22.04 kurun
-# Snapshot alın
-# Script'i test edin
-# Hata yaparsan snapshot'a geri dön
-```
-
-## Destek
-
-Kurulum sırasında sorun yaşarsanız:
-
-1. [Issues](https://github.com/alibedirhan/Youtube-scripts/issues) sayfasına bakın
-2. Sorun yoksa yeni issue açın
-3. Sistem bilgilerinizi (OS, bash versiyonu) ekleyin
-4. Hata mesajını tam olarak paylaşın
-
-## Kontroller Listesi
-
-Kurulum sonrası kontrol edin:
-
-- [ ] Script çalışıyor
-- [ ] Tmux session açılıyor
-- [ ] Sağ ve sol paneller görünüyor
-- [ ] Fare ile panel değiştirme çalışıyor
-- [ ] Modül 1 açılıyor
-- [ ] Quiz çalışıyor
-- [ ] Çıkış yapabiliyorsunuz
-
-Tüm kontroller tamam ise kurulum başarılı! 
-
-## İleri Adımlar
-
-Kurulum tamamlandıktan sonra:
-
-1. [README.md](README.md) dosyasını okuyun
-2. Modül 1'den başlayın
-3. Sağ panelde komutları deneyin
-4. Quiz ile kendinizi test edin
-5. [CONTRIBUTING.md](CONTRIBUTING.md)'yi okuyarak projeye katkıda bulunun
 
 ---
 
-Kurulum hakkında sorularınız için [Discussions](https://github.com/alibedirhan/Youtube-scripts/discussions) sayfasını kullanabilirsiniz.
+## 🔄 Güncelleme
+
+```bash
+# Dizine git
+cd ~/Youtube-scripts/APT\ YOUTUBE/
+
+# Güncelleme çek
+git pull origin main
+
+# Çalıştır
+./apt_rehber.sh
+```
+
+---
+
+## 🗑️ Kaldırma
+
+```bash
+# Repository'yi sil
+rm -rf ~/Youtube-scripts
+
+# Sistem geneli kurulum yaptıysanız
+sudo rm /usr/local/bin/apt-rehber
+sudo rm -rf /usr/local/share/apt-rehber
+
+# Alias kaldırma (Bash)
+sed -i '/apt-rehber/d' ~/.bashrc
+
+# Alias kaldırma (Zsh)
+sed -i '/apt-rehber/d' ~/.zshrc
+
+# Desktop entry kaldırma
+rm ~/.local/share/applications/apt-rehber.desktop
+```
+
+---
+
+## 📞 Destek
+
+Sorun yaşıyorsanız:
+
+1. 📖 Bu kılavuzu tekrar okuyun
+2. 🔍 [Issues](https://github.com/alibedirhan/Youtube-scripts/issues) sayfasında arayın
+3. 🆕 Yoksa [yeni issue](https://github.com/alibedirhan/Youtube-scripts/issues/new) açın
+4. 💬 Detaylı bilgi verin:
+   - İşletim sistemi (`lsb_release -a`)
+   - Bash versiyonu (`bash --version`)
+   - Tmux versiyonu (`tmux -V`)
+   - Hata mesajı (tam çıktı)
+
+---
+
+## ✅ Kurulum Kontrol Listesi
+
+Kurulumdan sonra kontrol edin:
+
+- [ ] Git kurulu (`git --version`)
+- [ ] Tmux kurulu (`tmux -V`)
+- [ ] Repository klonlandı (`ls Youtube-scripts/`)
+- [ ] Modüller mevcut (`ls modules/`)
+- [ ] İzinler doğru (`ls -lh apt_rehber.sh`)
+- [ ] Script çalışıyor (`./apt_rehber.sh`)
+- [ ] Tmux açılıyor (iki panel görünüyor)
+- [ ] Modüller açılabiliyor
+- [ ] Quiz çalışıyor
+
+---
+
+**🎉 Kurulum tamamlandı! Öğrenmeye başlayabilirsiniz!**
+
+[← Ana Sayfa](README.md) | [Katkı Rehberi →](CONTRIBUTING.md)
