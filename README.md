@@ -51,15 +51,42 @@ MODÜLLER:                          TEST TERMİNALİ
 ### Kurulum
 
 ```bash
-# Repository'yi klonlayın
-git clone https://github.com/alibedirhan/Youtube-scripts
-cd Youtube-scripts/APT\ YOUTUBE/
+## 📦 Kurulum
 
-# Scripti çalıştırılabilir yapın
-chmod +x apt_rehber.sh
+### Adım Adım Kurulum
 
-# Çalıştırın (bağımlılıklar otomatik kurulur)
-./apt_rehber.sh
+**1. Repository'yi klonlayın:**
+```bash
+git clone https://github.com/alibedirhan/APT-Konusu-Youtube-scripts
+```
+
+**2. Proje dizinine girin:**
+```bash
+cd APT-Konusu-Youtube-scripts
+```
+
+**3. Scripti çalıştırın:**
+```bash
+bash apt_rehber.sh
+```
+
+> ⚡ **Not:** İlk çalıştırmada tmux ve less gibi bağımlılıklar otomatik olarak kurulacaktır.
+
+---
+
+### ⚡ Tek Komutla Kurulum (Hızlı)
+```bash
+git clone https://github.com/alibedirhan/APT-Konusu-Youtube-scripts && cd APT-Konusu-Youtube-scripts && bash apt_rehber.sh
+```
+
+---
+
+### ✅ İlk Çalıştırmada Ne Olur?
+
+- ✅ Sistem kontrolleri yapılır
+- ✅ Eksik bağımlılıklar (tmux, less) otomatik kurulur
+- ✅ Modül dosyaları kontrol edilir
+- ✅ Tmux oturumu başlatılır ve etkileşimli rehber açılır
 ```
 
 **İlk çalıştırmada ne olur?**
